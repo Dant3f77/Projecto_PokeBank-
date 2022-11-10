@@ -46,16 +46,16 @@ var retiros = function(){
             usuario[user][2] = usuario[user][2] - parseInt(retiro);
             //usuario,tipotransaccio, valor transaccion, saldo actual
             transaccion.push([usuario[user][0],"Retiro", "$"+retiro, "$"+usuario[user][2],"Su retiro es de: "+"$"+retiro]);  
-            alert("Transacción realizada con exito");
+            swal("¡Pokefantástico!", "La transacción fue realizada con éxito", "success");
             genera_tabla();
         }else{
-            alert("Fondos insuficientes");
+            swal("Oooh no", "Usted no posee fondos suficientes para realizar la operación", "error");
         }  
         break;
      }  
     }
 }else{
-    alert("Por Favor ponga un monto para la transaccion")
+    swal("Operación incompleta", "Por Favor digite un monto para la transacción", "warning");
 }
 }
 var retirar = function(){
@@ -67,7 +67,7 @@ var depositos = function(){
     
     var deposito = document.getElementById("valorDeposito").value;  
     if(deposito === "0" || deposito ==="" ){ 
-        alert("Por Favor ponga un monto para la transaccion")
+        swal("Operación incompleta", "Por Favor digite un monto para la transaccioón", "warning");
        
     }else{
         for( var user in usuario){
@@ -76,10 +76,10 @@ var depositos = function(){
                     usuario[user][2] = usuario[user][2] + parseInt(deposito);
                     //usuario,tipotransaccio, valor transaccion, saldo actual
                     transaccion.push([usuario[user][0],"Deposito", "$"+ deposito, "$"+usuario[user][2],"Su deposito es de $"+deposito]);  
-                    alert("Transacción realizada con exito");
+                    swal("¡Pokefantástico!", "La transacción fue realizada con éxito", "success");
                     genera_tabla();
                 }else{
-                    alert("Fondos insuficientes");
+                    swal("Oooh no", "Usted no posee fondos suficientes para realizar la operación", "error");
                 }  
                 break;
             }  
@@ -105,7 +105,7 @@ var pagos = function(){
     
     var pago = document.getElementById("valorPago").value; 
     if(pago === "0" || pago ==="" ){ 
-        alert("Por Favor ponga un monto para la transaccion")  
+        swal("Operación incompleta", "Por Favor digite un monto para la transaccion", "warning"); 
          }else{   
             for( var user in usuario){
                 if (pin == usuario[user][1]){
@@ -113,10 +113,10 @@ var pagos = function(){
                        usuario[user][2] = usuario[user][2] - parseInt(pago);
                        //usuario,tipotransaccio, valor transaccion, saldo actual
                        transaccion.push([usuario[user][0],"Retiro", " $"+pago, usuario[user][2],"Pago de factura "+servicios.value+" $"+pago]);  
-                       alert("Transacción realizada con exito");
+                       swal("¡Pokefantástico!", "La transacción fue realizada con éxito", "success");
                        genera_tabla();
                    }else{
-                       alert("Fondos insuficientes");
+                       swal("Oooh no", "Usted no posee fondos suficientes para realizar la operación", "error");
                    }  
                    break;
                 }  
