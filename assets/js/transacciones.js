@@ -5,13 +5,17 @@ const urlParams = new URLSearchParams(valores);
 
 var pin =  urlParams.get('pin');
 
-//usuario.push(["Karla Bonilla", 1234, 200,22446688]);
+//usuario.push(["Karla Bonilla", 1034, 200,22446688]);
 //usuario.push(["Daniel Bonilla", 1244, 100,88991177]);
 //usuario.push(["Ronald Bonilla", 1214, 500,11001100]);
+//usuario.push(["Ash Ketchum", 1234, 500,0987654321]);
 
-/* metodo para datos*/
+/* validación de pin*/
+for(var )
 
-    
+
+
+/* metodo para datos*/ 
         
     for( var user in usuario){
         
