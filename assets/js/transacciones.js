@@ -10,8 +10,7 @@ var pin =  urlParams.get('pin');
 //usuario.push(["Ronald Bonilla", 1214, 500,11001100]);
 //usuario.push(["Ash Ketchum", 1234, 500,0987654321]);
 
-/* validación de pin*/
-for(var )
+
 
 
 

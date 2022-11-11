@@ -1,27 +1,13 @@
-
-//var pswd = [1244,1234];
-
-var formulario = document.getElementById('formcenter')[0],
-elementos = formulario.elements;
-boton = document.getElementById('btn');
-
-var validarPin = function(){
-    
-    for(var user in usuarios ){
-        if (formulario.pin.value == usuarios[user][1]) {
-
-            alert("entro"+ usuarios[user]);
+function validate() {
+    var pin=document.getElementById('pin').value;
+    if (pin=="1234"){
+        alert("Ingreso exitoso");
+        window.location.href="../transacciones.html?pin=1234";
         
-        }
-        else{
-            alert("No es el pin");
-            return;
-        }
-    return;
+    }
+    else{
+        alert("Ingrese un pin valido");
+        
+        
     }
 }
-var validar = function(){
-    validarPin();
-}
-formulario.addEventListener("submit", validar);
-
