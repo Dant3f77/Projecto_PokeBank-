@@ -4,27 +4,30 @@ var valores = window.location.search;
 const urlParams = new URLSearchParams(valores);
 
 var pin =  urlParams.get('pin');
-
-//usuario.push(["Karla Bonilla", 1034, 200,22446688]);
-//usuario.push(["Daniel Bonilla", 1244, 100,88991177]);
-//usuario.push(["Ronald Bonilla", 1214, 500,11001100]);
-//usuario.push(["Ash Ketchum", 1234, 500,0987654321]);
-
+//en lugar de urlparams ira localStorage
 
 
 
 
 /* metodo para datos*/ 
-        
+      
+var entrar= false;
+
+
     for( var user in usuario){
         
      if (pin == usuario[user][1]){
-    document.getElementById("nombreCliente").innerHTML= "Nombre Cliente: "+usuario[user][0];
-    document.getElementById("numeroDeCuenta").innerHTML= "Numero de Cuenta: "+usuario[user][3]
-        
+        document.getElementById("nombreCliente").innerHTML= "Nombre Cliente: "+usuario[user][0];
+        document.getElementById("numeroDeCuenta").innerHTML= "Numero de Cuenta: "+usuario[user][3]
+        entrar=true;
         break;
      }  
+     
     }
+    if(entrar==false){
+        window.location.href="../login.html";
+    }
+
 
 /* metodo para saldo*/
 for( var user in usuario){
@@ -37,22 +40,37 @@ for( var user in usuario){
    }
 
 
-
+   var numeros="0123456789";
+   var bandera = false;
+   
 
 /* metodo para retirar*/
 var retiros = function(){
-    var retiro = document.getElementById("valorRetiro").value;    
+    var retiro = document.getElementById("valorRetiro").value; 
+    bandera = validarcamponumerico(retiro);   
     if(retiro != "0" && retiro != "" ){   
     for( var user in usuario){
      if (pin == usuario[user][1]){
-       if (usuario[user][2]>0 && retiro<=usuario[user][2]){
+       if (usuario[user][2]>0 && retiro<=usuario[user][2] && !bandera){
             usuario[user][2] = usuario[user][2] - parseInt(retiro);
             //usuario,tipotransaccio, valor transaccion, saldo actual
             transaccion.push([usuario[user][0],"Retiro", "$"+retiro, "$"+usuario[user][2],"Su retiro es de: "+"$"+retiro]);  
             swal("¡Pokefantástico!", "La transacción fue realizada con éxito", "success");
             genera_tabla();
         }else{
-            swal("Oooh no", "Usted no posee fondos suficientes para realizar la operación", "error");
+            
+             
+             if(bandera == false){
+                swal("Oooh no", "Usted no posee fondos suficientes para realizar la operación", "error");
+             }
+             else{
+                swal("Error", "El dato ingresado no es numerico", "error");
+             }
+
+
+
+
+            
         }  
         break;
      }  
@@ -65,24 +83,37 @@ var retirar = function(){
     retiros();
 }
 
+
+
+
 /* metodo para depositar*/
 var depositos = function(){
-    
     var deposito = document.getElementById("valorDeposito").value;  
+    bandera = validarcamponumerico(deposito);
     if(deposito === "0" || deposito ==="" ){ 
         swal("Operación incompleta", "Por Favor digite un monto para la transaccioón", "warning");
        
     }else{
         for( var user in usuario){
             if (pin == usuario[user][1]){
-                if(usuario[user][2]>0 && deposito<=usuario[user][2]){
+                if(usuario[user][2]>0 && !bandera){
                     usuario[user][2] = usuario[user][2] + parseInt(deposito);
                     //usuario,tipotransaccio, valor transaccion, saldo actual
                     transaccion.push([usuario[user][0],"Deposito", "$"+ deposito, "$"+usuario[user][2],"Su deposito es de $"+deposito]);  
                     swal("¡Pokefantástico!", "La transacción fue realizada con éxito", "success");
                     genera_tabla();
                 }else{
-                    swal("Oooh no", "Usted no posee fondos suficientes para realizar la operación", "error");
+                    
+
+                    
+                     
+                     if(bandera == false){
+                        swal("Oooh no", "No ha colocado una cantidad correcta", "error");
+                     }
+                     else{
+                        swal("Error", "El dato ingresado no es numerico", "error");
+                     }
+
                 }  
                 break;
             }  
@@ -91,6 +122,24 @@ var depositos = function(){
     }
     
 }
+
+function validarcamponumerico(textovalidar){
+    
+    for(i=0; i<textovalidar.length; i++){  //en vez de texto debes poner donde recibis el dato a evaluar
+        if (numeros.indexOf(textovalidar.charAt(i),0)!=-1){        
+            bandera = false;  
+    
+        }
+        else{
+            bandera = true;
+            return bandera;
+            
+        }
+     }
+     return bandera;
+}
+
+
 var depositar = function(){
     depositos();
 }
@@ -107,19 +156,25 @@ pagos.addEventListener("change", function() {
 var pagos = function(){
     
     var pago = document.getElementById("valorPago").value; 
+    bandera = validarcamponumerico(pago);
     if(pago === "0" || pago ==="" ){ 
-        swal("Operación incompleta", "Por Favor digite un monto para la transaccion", "warning"); 
+        //swal("Operación incompleta", "Por Favor digite un monto para la transaccion", "warning"); 
          }else{   
             for( var user in usuario){
                 if (pin == usuario[user][1]){
-                   if(usuario[user][2]>0 && pago<=usuario[user][2]){
+                   if(usuario[user][2]>0 && pago<=usuario[user][2]&& !bandera){
                        usuario[user][2] = usuario[user][2] - parseInt(pago);
                        //usuario,tipotransaccio, valor transaccion, saldo actual
                        transaccion.push([usuario[user][0],"Retiro", " $"+pago, usuario[user][2],"Pago de factura "+servicios.value+" $"+pago]);  
                        swal("¡Pokefantástico!", "La transacción fue realizada con éxito", "success");
                        genera_tabla();
                    }else{
-                       swal("Oooh no", "Usted no posee fondos suficientes para realizar la operación", "error");
+                    if(bandera == false){
+                        swal("Oooh no", "Usted no posee fondos suficientes para realizar la operación", "error");
+                     }
+                     else{
+                        swal("Error", "El dato ingresado no es numerico", "error");
+                     }
                    }  
                    break;
                 }  
